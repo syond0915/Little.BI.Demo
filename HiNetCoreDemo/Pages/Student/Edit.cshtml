@@ -1,0 +1,63 @@
+﻿@page
+@model HiNetCoreDemo.Pages.Student.EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>编辑</h2>
+<hr />
+
+<div class="row">
+    <div class="col-lg-4">
+        <form method="post">
+            <div class="form-group">
+                <input asp-for="Student.Id" class="form-control" type="hidden" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.StId" class="control-label"></label>
+                <input asp-for="Student.StId" class="form-control" readonly="readonly" />
+                <span asp-validation-for="Student.StId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.StName" class="control-label"></label>
+                <input asp-for="Student.StName" class="form-control" />
+                <span asp-validation-for="Student.StName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.StTitle" class="control-label"></label>
+                <input asp-for="Student.StTitle" class="form-control" />
+                <span asp-validation-for="Student.StTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-4">
+                        @foreach (var sub in Model.Student.Subjects)
+                        {
+                            int index = Model.Student.Subjects.IndexOf(sub);
+                            <div class="form-group">
+                                <input asp-for="Student.Subjects[index].Id" class="form-control" type="hidden" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Student.Subjects[index].SubTitle" class="control-label"></label>
+                                <input asp-for="Student.Subjects[index].SubTitle" class="form-control" />
+                                <span asp-validation-for="Student.Subjects[index].SubTitle" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Student.Subjects[index].SubSource" class="control-label"></label>
+                                <input asp-for="Student.Subjects[index].SubSource" class="form-control" />
+                                <span asp-validation-for="Student.Subjects[index].SubSource" class="text-danger"></span>
+                            </div>
+                            @*<div>
+                                    <input type="submit" value="Create New Subject" asp-page-handler="Subject" />
+                                </div>*@
+                        }
+                    </div>
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="编辑保存" /> |
+                <a asp-page="Index">返回列表</a>
+            </div>
+        </form>
+    </div>
+</div>

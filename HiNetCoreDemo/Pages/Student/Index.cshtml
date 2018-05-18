@@ -1,0 +1,59 @@
+﻿@page
+@model HiNetCoreDemo.Pages.Student.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>学生、学分列表</h2>
+<hr />
+
+<form method="post">
+    条件：<input type="text" name="SearchString" value="@TempData["CurrentFilter"]"/>
+    <input type="submit" asp-page-handler="Filter"  /> | 
+    <a asp-page="Create">新增</a>
+</form>
+
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="Index" asp-route-sortOrder="@TempData["IdSortParm"]" asp-route-currentFilter="@TempData["CurrentFilter"]">
+                    @Html.DisplayNameFor(m => m.Students[0].StId)
+                </a>
+            </th>
+            <th>
+                <a asp-page="Index" asp-route-sortOrder="@TempData["NameSortParm"]" asp-route-currentFilter="@TempData["CurrentFilter"]">
+                    @Html.DisplayNameFor(m => m.Students[0].StName)
+                </a>
+            </th>
+            <th>@Html.DisplayNameFor(m => m.Students[0].StTitle)</th>
+            <th>@Html.DisplayNameFor(m => m.Students[0].Subjects)</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tboy>
+        @foreach (var mod in Model.Students)
+        {
+            <tr>
+                <td>@mod.StId</td>
+                <td>@mod.StName</td>
+                <td>@mod.StTitle</td>
+                <td>
+                    @if (mod.Subjects != null)
+                    {
+                        @foreach (var sub in mod.Subjects)
+                        {
+                            @string.Join("：", sub.SubTitle, sub.SubSource) <br />
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@mod.Id">编辑</a> |
+                    <a asp-page="Delete" asp-route-id="@mod.Id">删除</a>
+                </td>
+            </tr>
+        }
+    </tboy>
+</table>

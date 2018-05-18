@@ -62,7 +62,6 @@ namespace HiNetCoreDemo.Pages.Student
 
         public async Task<IActionResult> OnPostFilterAsync(string sortOrder, string searchString)
         {
-
             TempData["IdSortParm"] = string.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             TempData["NameSortParm"] = sortOrder == "Name" ? "name_desc" : "Name";
             TempData["CurrentFilter"] = searchString;
@@ -93,6 +92,5 @@ namespace HiNetCoreDemo.Pages.Student
             Students = await students.ToListAsync();
             return Page();
         }
-
     }
 }

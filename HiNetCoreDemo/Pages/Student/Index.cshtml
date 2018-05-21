@@ -1,6 +1,5 @@
 ﻿@page
 @model HiNetCoreDemo.Pages.Student.IndexModel
-@*@model PaginatedList<Models.Student>*@
 
 @{
     ViewData["Title"] = "Index";
@@ -64,10 +63,10 @@
 
 <nav aria-label="Page navigation">
     <ul class="pagination">
-        @if (Model.HasPreviousPage)
+        @if (Model.Students.HasPreViousPage)
         {
             <li>
-                <a aria-label="Previous" asp-page="Index" asp-route-sortOrder="@TempData["CurrentSort"]" asp-route-currentFilter="@TempData["CurrentFilter"]" asp-route-currentPageIndex="@(Model.PageIndex - 1)">
+                <a aria-label="Previous" asp-page="Index" asp-route-sortOrder="@TempData["CurrentSort"]" asp-route-currentFilter="@TempData["CurrentFilter"]" asp-route-currentPageIndex="@(Model.Students.PageIndex - 1)">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -80,9 +79,9 @@
                 </span>
             </li>
         }
-        @for (int pi = 1; pi <= Model.TotalPages; pi++)
+        @for (int pi = 1; pi <= Model.Students.TotalPages; pi++)
         {
-            if (pi == Model.PageIndex)
+            if (pi == Model.Students.PageIndex)
             {
                 <li class="active">
                     <span>@pi <span class="sr-only">(current)</span></span>
@@ -98,10 +97,10 @@
                 </li>
             }
         }
-        @if (Model.HasNextPage)
+        @if (Model.Students.HasNextPage)
         {
             <li>
-                <a aria-label="Next" asp-page="Index" asp-route-sortOrder="@TempData["CurrentSort"]" asp-route-currentFilter="@TempData["CurrentFilter"]" asp-route-currentPageIndex="@(Model.PageIndex + 1)">
+                <a aria-label="Next" asp-page="Index" asp-route-sortOrder="@TempData["CurrentSort"]" asp-route-currentFilter="@TempData["CurrentFilter"]" asp-route-currentPageIndex="@(Model.Students.PageIndex + 1)">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

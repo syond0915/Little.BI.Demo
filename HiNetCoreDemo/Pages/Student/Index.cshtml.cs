@@ -17,8 +17,8 @@ namespace HiNetCoreDemo.Pages.Student
         {
             _context = context;
         }
-        public List<HiNetCoreDemo.Models.Student> Students { get; set; }
-        public List<HiNetCoreDemo.Models.Subject> Subjects { get; set; }
+        public PaginatedList<HiNetCoreDemo.Models.Student> Students { get; set; }
+        public PaginatedList<HiNetCoreDemo.Models.Subject> Subjects { get; set; }
 
         [TempData]
         public string NameSortParm { get; set; }        
@@ -29,19 +29,7 @@ namespace HiNetCoreDemo.Pages.Student
         [TempData]
         public string CurrentFilter { get; set; }
 
-        public int PageIndex { get; set; }
-        public int TotalPages { get; set; }
-
-        public bool HasPreviousPage => PageIndex > 1;
-
-        public bool HasNextPage => PageIndex < TotalPages;
-
-        //public void OnGet()
-        //{
-        //    Students = _context.Student.Include(m => m.Subjects).OrderBy(x => x.StId).ToList();            
-        //}
-
-        public async Task<IActionResult> OnGet(string sortOrder, string currentFilter, int currentPageIndex = 1)
+        public async Task<IActionResult> OnGetAsync(string sortOrder, string currentFilter, int currentPageIndex = 1, int pageSize = 3)
         {
             TempData["CurrentSort"] = sortOrder;
             TempData["CurrentFilter"] = currentFilter;
@@ -71,16 +59,11 @@ namespace HiNetCoreDemo.Pages.Student
                     break;
             }
             //Students = await students.ToListAsync();
-
-            int pageSize = 3;
-            var count = await students.CountAsync();
-            var items = await students.Skip((currentPageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-            PageIndex = currentPageIndex;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            var items = await PaginatedList<Models.Student>.CreatePagingAsync(students.AsNoTracking(), currentPageIndex, pageSize);
             Students = items;
             return Page();
         }
-        public async Task<IActionResult> OnPostFilterAsync(string sortOrder, string searchString, int currentPageIndex = 1)
+        public async Task<IActionResult> OnPostFilterAsync(string sortOrder, string searchString, int currentPageIndex = 1, int pageSize = 3)
         {
             TempData["CurrentSort"] = sortOrder;
             TempData["CurrentFilter"] = searchString;
@@ -112,11 +95,7 @@ namespace HiNetCoreDemo.Pages.Student
                     break;
             }
             //Students = await students.ToListAsync();
-            int pageSize = 3;
-            var count = await students.CountAsync();
-            var items = await students.Skip((currentPageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-            PageIndex = currentPageIndex;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            var items = await PaginatedList<Models.Student>.CreatePagingAsync(students.AsNoTracking(), currentPageIndex, pageSize);
             Students = items;
             return Page();
         }

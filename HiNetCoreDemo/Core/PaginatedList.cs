@@ -39,7 +39,7 @@ namespace HiNetCoreDemo.Core
         /// <param name="pageIndex">当前页</param>
         /// <param name="pageSize">当前页数据条数</param>
         /// <returns></returns>
-        public static async Task<PaginatedList<T>> CreatepagingAsync(IQueryable<T> source, int pageIndex, int pageSize)
+        public static async Task<PaginatedList<T>> CreatePagingAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
             //返回实体总条数
             var count = await source.CountAsync();

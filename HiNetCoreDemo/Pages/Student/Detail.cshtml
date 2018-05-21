@@ -4,5 +4,27 @@
     ViewData["Title"] = "Detail";
 }
 
-<h2>Detail</h2>
+<h2>详细</h2>
 
+<hr />
+
+<dl class="dl-horizontal">
+    <dt>@Html.DisplayNameFor(m => m.Student.StId)</dt>
+    <dd>@Html.DisplayFor(m => m.Student.StId)</dd>
+
+    <dt>@Html.DisplayNameFor(m => m.Student.StName)</dt>
+    <dd>@Html.DisplayFor(m => m.Student.StName)</dd>
+
+    <dt>@Html.DisplayNameFor(m => m.Student.StTitle)</dt>
+    <dd>@Html.DisplayFor(m => m.Student.StTitle)</dd>
+
+    @foreach (var sub in Model.Student.Subjects)
+    {
+        <dt>@sub.SubTitle</dt>
+        <dd>@sub.SubSource</dd>
+    }
+
+</dl>
+<form method="post"> 
+    <a asp-page="Index">返回列表</a>
+</form>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HiNetCoreDemo.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -35,10 +36,13 @@ namespace HiNetCoreDemo.Pages.Student
 
         public bool HasNextPage => PageIndex < TotalPages;
 
-        public async Task<IActionResult> OnGet(string sortOrder,string currentFilter,int currentPageIndex=1)
-        {
-            //Students = _context.Student.Include(m => m.Subjects).OrderBy(x => x.StId).ToList();
+        //public void OnGet()
+        //{
+        //    Students = _context.Student.Include(m => m.Subjects).OrderBy(x => x.StId).ToList();            
+        //}
 
+        public async Task<IActionResult> OnGet(string sortOrder, string currentFilter, int currentPageIndex = 1)
+        {
             TempData["CurrentSort"] = sortOrder;
             TempData["CurrentFilter"] = currentFilter;
 

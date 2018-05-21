@@ -59,8 +59,7 @@ namespace HiNetCoreDemo.Pages.Student
                     break;
             }
             //Students = await students.ToListAsync();
-            var items = await PaginatedList<Models.Student>.CreatePagingAsync(students.AsNoTracking(), currentPageIndex, pageSize);
-            Students = items;
+            Students = await PaginatedList<Models.Student>.CreatePagingAsync(students.AsNoTracking(), currentPageIndex, pageSize);            
             return Page();
         }
         public async Task<IActionResult> OnPostFilterAsync(string sortOrder, string searchString, int currentPageIndex = 1, int pageSize = 3)
@@ -95,8 +94,7 @@ namespace HiNetCoreDemo.Pages.Student
                     break;
             }
             //Students = await students.ToListAsync();
-            var items = await PaginatedList<Models.Student>.CreatePagingAsync(students.AsNoTracking(), currentPageIndex, pageSize);
-            Students = items;
+            Students = await PaginatedList<Models.Student>.CreatePagingAsync(students.AsNoTracking(), currentPageIndex, pageSize);
             return Page();
         }
 

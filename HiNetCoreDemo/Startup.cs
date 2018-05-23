@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HiNetCoreDemo.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,8 +24,13 @@ namespace HiNetCoreDemo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            // Add framework services.
             services.AddDbContext<HiNetCoreDemo.Data.HiNetCoreDbContext>(options =>
                                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // Add application services. Get Server Time
+            services.AddTransient<IDateTime, SystemDateTime>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +48,8 @@ namespace HiNetCoreDemo
 
             app.UseStaticFiles();
 
-            app.UseMvc();
+            //app.UseMvc();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

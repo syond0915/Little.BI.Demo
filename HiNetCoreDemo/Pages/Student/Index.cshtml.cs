@@ -12,10 +12,12 @@ namespace HiNetCoreDemo.Pages.Student
     public class IndexModel : PageModel
     {
         private readonly HiNetCoreDemo.Data.HiNetCoreDbContext _context;
+        private readonly IDateTime _dateTime;
 
-        public IndexModel(HiNetCoreDemo.Data.HiNetCoreDbContext context)
+        public IndexModel(HiNetCoreDemo.Data.HiNetCoreDbContext context,IDateTime dateTime)
         {
             _context = context;
+            _dateTime = dateTime;
         }
         public PaginatedList<HiNetCoreDemo.Models.Student> Students { get; set; }
         public PaginatedList<HiNetCoreDemo.Models.Subject> Subjects { get; set; }
@@ -29,8 +31,19 @@ namespace HiNetCoreDemo.Pages.Student
         [TempData]
         public string CurrentFilter { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string sortOrder, string currentFilter, int currentPageIndex = 1, int pageSize = 3)
         {
+            var serviceTime = _dateTime.Now;
+            if (serviceTime.Hour < 12)
+                TempData["Message"] = "It's morning here  -  Good Morning!";
+           else if (serviceTime.Hour < 17)
+                TempData["Message"] = "It's afternoon here  -  Good Afternoon!";
+            else
+                TempData["Message"] = "It's evening here  -  Good Evening!";
+
             TempData["CurrentSort"] = sortOrder;
             TempData["CurrentFilter"] = currentFilter;
 

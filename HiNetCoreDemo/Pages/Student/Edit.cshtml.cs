@@ -30,11 +30,14 @@ namespace HiNetCoreDemo.Pages.Student
             {
                 return Page();
             }
-            _context.Attach(Student).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            foreach(var sub in Student.Subjects)
-            {
-                _context.Attach(sub).State = EntityState.Modified;
-            }
+            //_context.Attach(Student).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //foreach(var sub in Student.Subjects)
+            //{
+            //    _context.Attach(sub).State = EntityState.Modified;
+            //}
+
+            _context.Student.Update(Student);
+            _context.Subject.UpdateRange(Student.Subjects);
             await _context.SaveChangesAsync();
             return RedirectToPage("Index");
         }
